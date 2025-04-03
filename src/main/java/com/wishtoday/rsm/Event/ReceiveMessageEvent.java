@@ -44,7 +44,7 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
         for (String message : messages) {
             LOGGER.info(message);
             if (text.getString().contains(message)) {
-                LOGGER.info(text.getString() + "由" + RemoveSomeMessage.MOD_ID + " Mod 因匹配上" + message + "而被拦截");
+                LOGGER.info(text.getString() + "由" + RemoveSomeMessage.MOD_ID + " Mod 因匹配上 " + message + " 而被拦截");
                 return false;
             }
         }
@@ -53,6 +53,14 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
 
     @Override
     public boolean allowReceiveChatMessage(Text message, @Nullable SignedMessage signedMessage, @Nullable GameProfile sender, MessageType.Parameters params, Instant receptionTimestamp) {
-        return false;
+        Configs config = ResConfig.getConfigs();
+        List<String> list = config.getPlayerChatMessages();
+        for (String s : list) {
+            if (message.getString().contains(s)) {
+                LOGGER.info(message.getString() + "由" + RemoveSomeMessage.MOD_ID + " Mod 因匹配上玩家聊天关键词 " + s + " 而被拦截");
+                return false;
+            }
+        }
+        return true;
     }
 }
