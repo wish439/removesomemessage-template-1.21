@@ -25,5 +25,6 @@ public class RemoveSomeMessage implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
         ClientReceiveMessageEvents.ALLOW_GAME.register(new ReceiveMessageEvent());
+		ClientReceiveMessageEvents.ALLOW_CHAT.register(new ReceiveMessageEvent());
 	}
 }
