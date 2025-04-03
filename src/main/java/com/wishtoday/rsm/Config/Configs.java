@@ -9,6 +9,7 @@ public class Configs {
     private boolean removeJoinGameMessages = false;
     private boolean removeQuitGameMessages = false;
     private List<String> RemoveMessages = new ArrayList<>();
+    private List<String> PlayerChatMessages = new ArrayList<>();
 
     public  boolean isRemoveQuitGameMessages() {
         return this.removeQuitGameMessages;
@@ -51,6 +52,15 @@ public class Configs {
 
     public void setRemoveAdvMessages(boolean b) {
         this.removeAdvMessages = b;
+        ResConfig.saveConfigs();
+    }
+
+    public List<String> getPlayerChatMessages() {
+        return this.PlayerChatMessages;
+    }
+
+    public void setPlayerChatMessages(List<String> playerChatMessages) {
+        this.PlayerChatMessages = playerChatMessages;
         ResConfig.saveConfigs();
     }
 }

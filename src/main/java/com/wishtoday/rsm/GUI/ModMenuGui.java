@@ -4,6 +4,9 @@ import com.wishtoday.rsm.Config.ResConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.MultilineText;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -12,21 +15,20 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
 
 import java.util.*;
+import java.util.List;
 import java.util.function.Supplier;
 
 @Environment(EnvType.CLIENT)
 public class ModMenuGui extends Screen {
     private TextFieldWidget fieldWidget;
+    private TextFieldWidget PlayerChatFieldWidget;
+    TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
     //消除一些if
     private static final Map<String, Supplier<Boolean>> TEXTSTATEMAP = Map.of(
-            "isRemoveMusicMessages",
-            () -> ResConfig.getConfigs().isRemoveMusicMessages(),
-            "isRemoveJoinGameMessages",
-            () -> ResConfig.getConfigs().isRemoveJoinGameMessages(),
-            "isRemoveQuitGameMessages",
-            () -> ResConfig.getConfigs().isRemoveQuitGameMessages(),
-            "isRemoveAdvMessages",
-            () -> ResConfig.getConfigs().isRemoveAdvMessages()
+            "isRemoveMusicMessages", () -> ResConfig.getConfigs().isRemoveMusicMessages(),
+            "isRemoveJoinGameMessages", () -> ResConfig.getConfigs().isRemoveJoinGameMessages(),
+            "isRemoveQuitGameMessages", () -> ResConfig.getConfigs().isRemoveQuitGameMessages(),
+            "isRemoveAdvMessages", () -> ResConfig.getConfigs().isRemoveAdvMessages()
     );
 
     private final Screen parentScreen;
@@ -47,26 +49,8 @@ public class ModMenuGui extends Screen {
 
     @Override
     protected void init() {
-        fieldWidget = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, width / 2 - 120, 50, 150, 20, Text.of("需要屏蔽的文本"));
-        fieldWidget.setText(String.join(",",ResConfig.getConfigs().getRemoveMessages()));
-        ButtonWidget removeMusicButton = RegisterButton(width / 2 - 120, 60, 150, 20, "isRemoveMusicMessages", "是否屏蔽音乐消息");
-        ButtonWidget removeJoinButton = RegisterButton(width / 2 - 120, 40, 150, 20, "isRemoveJoinGameMessages", "是否屏蔽进入游戏消息");
-        ButtonWidget removeQuitButton = RegisterButton(width / 2 - 120, 20, 150, 20, "isRemoveQuitGameMessages", "是否屏蔽退出游戏消息");
-        ButtonWidget removeAdvButton = RegisterButton(width / 2 - 120, 0, 150, 20, "isRemoveAdvMessages", "是否屏蔽进度消息");
-
-
-        ButtonWidget modMenuButton = ButtonWidget.builder(Text.of("退出"), button -> this.close())
-                .dimensions(width / 2 - 70, 200, 150, 20)
-                .tooltip(Tooltip.of(Text.of("返回上个界面")))
-                .build();
-        fieldWidget.setChangedListener(text -> ResConfig.getConfigs().setRemoveMessages(StringToList(text)));
-        addDrawableChild(fieldWidget);
-        addDrawableChild(removeAdvButton);
-        addDrawableChild(removeMusicButton);
-        addDrawableChild(removeJoinButton);
-        addDrawableChild(removeQuitButton);
-        addDrawableChild(modMenuButton);
-
+        registerButton();
+        registerTextField();
     }
 
     @Override
@@ -77,6 +61,7 @@ public class ModMenuGui extends Screen {
             MinecraftClient.getInstance().setScreen(null);
         }
     }
+
     private static ButtonWidget RegisterButton(int x, int y, int width, int height, String bool, String tip) {
         return ButtonWidget.builder(getTextBasedOnState(bool), button -> {
                     // 切换状态
@@ -107,14 +92,55 @@ public class ModMenuGui extends Screen {
                 .tooltip(Tooltip.of(Text.of(tip)))
                 .build();
     }
+
     @Override
     public void resize(MinecraftClient client, int width, int height) {
+        String text = PlayerChatFieldWidget.getText();
         String string = fieldWidget.getText();
         this.init(client, width, height);
         fieldWidget.setText(string);
+        PlayerChatFieldWidget.setText(text);
     }
 
     private static List<String> StringToList(String string) {
-        return new ArrayList<>(Arrays.asList(string.split(",")));
+        return new ArrayList<>(Arrays.asList(Arrays
+                .stream(string.split(","))
+                .map(String::trim)
+                .toArray(String[]::new)));
+    }
+
+    @Override
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
+        MultilineText multilineText = MultilineText.create(textRenderer, Text.of("请输入你要屏蔽的消息,用,隔开(英文逗号)"));
+        multilineText.drawWithShadow(context, width / 2 - 170, 60, 16, 0xffffff);
+    }
+    private void registerTextField(){
+        fieldWidget = new TextFieldWidget(textRenderer, width / 2, 60, 150, 20, Text.of("需要屏蔽的文本"));
+        fieldWidget.setText(String.join(",", ResConfig.getConfigs().getRemoveMessages()));
+        fieldWidget.setChangedListener(text -> ResConfig.getConfigs().setRemoveMessages(StringToList(text)));
+        addDrawableChild(fieldWidget);
+
+        PlayerChatFieldWidget = new TextFieldWidget(textRenderer, width / 2, 120, 150, 20, Text.of("需要屏蔽的玩家聊天文本"));
+        PlayerChatFieldWidget.setText(String.join(",", ResConfig.getConfigs().getPlayerChatMessages()));
+        PlayerChatFieldWidget.setChangedListener(text -> ResConfig.getConfigs().setPlayerChatMessages(StringToList(text)));
+        addDrawableChild(PlayerChatFieldWidget);
+    }
+    private void registerButton(){
+        ButtonWidget removeMusicButton = RegisterButton(width / 2 - 150, 40, 150, 20, "isRemoveMusicMessages", "是否屏蔽音乐消息");
+        ButtonWidget removeQuitButton = RegisterButton(width / 2, 40, 150, 20, "isRemoveQuitGameMessages", "是否屏蔽退出游戏消息");
+        ButtonWidget removeJoinButton = RegisterButton(width / 2 - 150, 20, 150, 20, "isRemoveJoinGameMessages", "是否屏蔽进入游戏消息");
+        ButtonWidget removeAdvButton = RegisterButton(width / 2, 20, 150, 20, "isRemoveAdvMessages", "是否屏蔽进度消息");
+        ButtonWidget modMenuButton = ButtonWidget.builder(Text.of("退出"), button -> this.close())
+                .dimensions(width / 2 - 70, 200, 150, 20)
+                .tooltip(Tooltip.of(Text.of("返回上个界面")))
+                .build();
+
+
+        addDrawableChild(removeAdvButton);
+        addDrawableChild(removeMusicButton);
+        addDrawableChild(removeJoinButton);
+        addDrawableChild(removeQuitButton);
+        addDrawableChild(modMenuButton);
     }
 }
