@@ -112,23 +112,25 @@ public class ModMenuGui extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
-        MultilineText multilineText = MultilineText.create(textRenderer, Text.of("请输入你要屏蔽的消息,用,隔开(英文逗号)"));
-        multilineText.drawWithShadow(context, width / 2 - 170, 60, 16, 0xffffff);
+        MultilineText multilineText = MultilineText.create(textRenderer, Text.of("请输入你要屏蔽的服务器消息，用,隔开(英文逗号)"));
+        multilineText.drawWithShadow(context, width / 2 - 100, 80, 16, 0xffffff);
+        MultilineText multilineText1 = MultilineText.create(textRenderer, Text.of("请输入你要屏蔽的玩家聊天消息，用,隔开(英文逗号)"));
+        multilineText1.drawWithShadow(context, width / 2 - 100, 140, 16, 0xffffff);
     }
     private void registerTextField(){
-        fieldWidget = new TextFieldWidget(textRenderer, width / 2, 60, 150, 20, Text.of("需要屏蔽的文本"));
+        fieldWidget = new TextFieldWidget(textRenderer, width / 2 - 150, 60, 300, 20, Text.of("需要屏蔽的文本"));
         fieldWidget.setText(String.join(",", ResConfig.getConfigs().getRemoveMessages()));
         fieldWidget.setChangedListener(text -> ResConfig.getConfigs().setRemoveMessages(StringToList(text)));
         addDrawableChild(fieldWidget);
 
-        PlayerChatFieldWidget = new TextFieldWidget(textRenderer, width / 2, 120, 150, 20, Text.of("需要屏蔽的玩家聊天文本"));
+        PlayerChatFieldWidget = new TextFieldWidget(textRenderer, width / 2 - 150, 120, 300, 20, Text.of("需要屏蔽的玩家聊天文本"));
         PlayerChatFieldWidget.setText(String.join(",", ResConfig.getConfigs().getPlayerChatMessages()));
         PlayerChatFieldWidget.setChangedListener(text -> ResConfig.getConfigs().setPlayerChatMessages(StringToList(text)));
         addDrawableChild(PlayerChatFieldWidget);
     }
     private void registerButton(){
-        ButtonWidget removeMusicButton = RegisterButton(width / 2 - 150, 40, 150, 20, "isRemoveMusicMessages", "是否屏蔽音乐消息");
-        ButtonWidget removeQuitButton = RegisterButton(width / 2, 40, 150, 20, "isRemoveQuitGameMessages", "是否屏蔽退出游戏消息");
+        ButtonWidget removeMusicButton = RegisterButton(width / 2, 40, 150, 20, "isRemoveMusicMessages", "是否屏蔽音乐消息");
+        ButtonWidget removeQuitButton = RegisterButton(width / 2 -150, 40, 150, 20, "isRemoveQuitGameMessages", "是否屏蔽退出游戏消息");
         ButtonWidget removeJoinButton = RegisterButton(width / 2 - 150, 20, 150, 20, "isRemoveJoinGameMessages", "是否屏蔽进入游戏消息");
         ButtonWidget removeAdvButton = RegisterButton(width / 2, 20, 150, 20, "isRemoveAdvMessages", "是否屏蔽进度消息");
         ButtonWidget modMenuButton = ButtonWidget.builder(Text.of("退出"), button -> this.close())
