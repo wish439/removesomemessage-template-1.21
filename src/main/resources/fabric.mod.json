@@ -3,15 +3,15 @@
 	"id": "removesomemessage",
 	"version": "${version}",
 	"name": "RemoveSomeMessage",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "这是一个可以屏蔽消息的Mod。",
 	"authors": [
-		"Me!"
+		"WishToday"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/wish439",
+		"sources": "https://github.com/wish439/removesomemessage-template-1.21"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT License",
 	"icon": "assets/removesomemessage/icon.png",
 	"environment": "*",
 	"entrypoints": {

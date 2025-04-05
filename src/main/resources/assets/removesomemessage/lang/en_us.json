@@ -1,0 +1,13 @@
+{
+  "rsm.gui.modmenu.quit": "quit",
+  "rsm.gui.modmenu.modmenuquit.tooltip": "Go back to the previous page",
+  "rsm.gui.null": "",
+  "rsm.gui.modmenu.text1": "Please enter the server message you want to block, separated by a comma",
+  "rsm.gui.modmenu.text2": "Please enter the player chat message you want to block, separated by a comma",
+  "rsm.gui.opentext" : "open",
+  "rsm.gui.closetext": "close",
+  "rsm.gui.modmenu.removemusic": "Whether to block music messages",
+  "rsm.gui.modmenu.removequitgame": "Whether to block the exit message",
+  "rsm.gui.modmenu.removejoingame": "Whether to block messages entering the game",
+  "rsm.gui.modmenu.removeadvmessage": "Whether to block progress messages"
+}

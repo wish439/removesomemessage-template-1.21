@@ -43,8 +43,8 @@ public class ModMenuGui extends Screen {
     private static Text getTextBasedOnState(String state) {
         return Optional
                 .ofNullable(TEXTSTATEMAP.get(state))
-                .map(s -> Text.of(s.get() ? "开" : "关"))
-                .orElse(Text.of(""));
+                .map(s -> Text.translatable(s.get() ? "rsm.gui.opentext" : "rsm.gui.closetext"))
+                .orElse(Text.translatable("rsm.gui.null"));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ModMenuGui extends Screen {
         }
     }
 
-    private static ButtonWidget RegisterButton(int x, int y, int width, int height, String bool, String tip) {
+    private static ButtonWidget RegisterButton(int x, int y, int width, int height, String bool, String tipKey) {
         return ButtonWidget.builder(getTextBasedOnState(bool), button -> {
                     // 切换状态
                     switch (bool) {
@@ -89,7 +89,7 @@ public class ModMenuGui extends Screen {
                     button.setMessage(getTextBasedOnState(bool));
                 })
                 .dimensions(x, y, width, height)
-                .tooltip(Tooltip.of(Text.of(tip)))
+                .tooltip(Tooltip.of(Text.translatable(tipKey)))
                 .build();
     }
 
@@ -112,32 +112,42 @@ public class ModMenuGui extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
-        MultilineText multilineText = MultilineText.create(textRenderer, Text.of("请输入你要屏蔽的服务器消息，用,隔开(英文逗号)"));
-        multilineText.drawWithShadow(context, width / 2 - 100, 80, 16, 0xffffff);
-        MultilineText multilineText1 = MultilineText.create(textRenderer, Text.of("请输入你要屏蔽的玩家聊天消息，用,隔开(英文逗号)"));
-        multilineText1.drawWithShadow(context, width / 2 - 100, 140, 16, 0xffffff);
+        //MultilineText multilineText = MultilineText.create(textRenderer, Text.of("请输入你要屏蔽的服务器消息，用,隔开(英文逗号)"));
+        MultilineText multilineText = MultilineText.create(textRenderer, Text.translatable("rsm.gui.modmenu.text1"));
+        multilineText.drawWithShadow(context, width / 2 - 150, 80, 16, 0xffffff);
+        //MultilineText multilineText1 = MultilineText.create(textRenderer, Text.of("请输入你要屏蔽的玩家聊天消息，用,隔开(英文逗号)"));
+        MultilineText multilineText1 = MultilineText.create(textRenderer, Text.translatable("rsm.gui.modmenu.text2"));
+        multilineText1.drawWithShadow(context, width / 2 - 150, 140, 16, 0xffffff);
     }
-    private void registerTextField(){
+
+    private void registerTextField() {
         fieldWidget = new TextFieldWidget(textRenderer, width / 2 - 150, 60, 300, 20, Text.of("需要屏蔽的文本"));
+        fieldWidget.setTooltip(Tooltip.of(Text.translatable("rsm.gui.modmenu.text1")));
         fieldWidget.setText(String.join(",", ResConfig.getConfigs().getRemoveMessages()));
         fieldWidget.setChangedListener(text -> ResConfig.getConfigs().setRemoveMessages(StringToList(text)));
         addDrawableChild(fieldWidget);
 
         PlayerChatFieldWidget = new TextFieldWidget(textRenderer, width / 2 - 150, 120, 300, 20, Text.of("需要屏蔽的玩家聊天文本"));
+        PlayerChatFieldWidget.setTooltip(Tooltip.of(Text.translatable("rsm.gui.modmenu.text2")));
         PlayerChatFieldWidget.setText(String.join(",", ResConfig.getConfigs().getPlayerChatMessages()));
         PlayerChatFieldWidget.setChangedListener(text -> ResConfig.getConfigs().setPlayerChatMessages(StringToList(text)));
         addDrawableChild(PlayerChatFieldWidget);
     }
-    private void registerButton(){
-        ButtonWidget removeMusicButton = RegisterButton(width / 2, 40, 150, 20, "isRemoveMusicMessages", "是否屏蔽音乐消息");
-        ButtonWidget removeQuitButton = RegisterButton(width / 2 -150, 40, 150, 20, "isRemoveQuitGameMessages", "是否屏蔽退出游戏消息");
-        ButtonWidget removeJoinButton = RegisterButton(width / 2 - 150, 20, 150, 20, "isRemoveJoinGameMessages", "是否屏蔽进入游戏消息");
-        ButtonWidget removeAdvButton = RegisterButton(width / 2, 20, 150, 20, "isRemoveAdvMessages", "是否屏蔽进度消息");
-        ButtonWidget modMenuButton = ButtonWidget.builder(Text.of("退出"), button -> this.close())
-                .dimensions(width / 2 - 70, 200, 150, 20)
-                .tooltip(Tooltip.of(Text.of("返回上个界面")))
-                .build();
 
+    private void registerButton() {
+        //ButtonWidget removeMusicButton = RegisterButton(width / 2, 40, 150, 20, "isRemoveMusicMessages", "是否屏蔽音乐消息");
+        ButtonWidget removeMusicButton = RegisterButton(width / 2, 40, 150, 20, "isRemoveMusicMessages", "rsm.gui.modmenu.removemusic");
+        //ButtonWidget removeQuitButton = RegisterButton(width / 2 -150, 40, 150, 20, "isRemoveQuitGameMessages", "是否屏蔽退出游戏消息");
+        ButtonWidget removeQuitButton = RegisterButton(width / 2 - 150, 40, 150, 20, "isRemoveQuitGameMessages", "rsm.gui.modmenu.removequitgame");
+        //ButtonWidget removeJoinButton = RegisterButton(width / 2 - 150, 20, 150, 20, "isRemoveJoinGameMessages", "是否屏蔽进入游戏消息");
+        ButtonWidget removeJoinButton = RegisterButton(width / 2 - 150, 20, 150, 20, "isRemoveJoinGameMessages", "rsm.gui.modmenu.removejoingame");
+        //ButtonWidget removeAdvButton = RegisterButton(width / 2, 20, 150, 20, "isRemoveAdvMessages", "是否屏蔽进度消息");
+        ButtonWidget removeAdvButton = RegisterButton(width / 2, 20, 150, 20, "isRemoveAdvMessages", "rsm.gui.modmenu.removeadvmessage");
+        ButtonWidget modMenuButton = ButtonWidget.builder(Text.translatable("rsm.gui.modmenu.quit"), button -> this.close())
+                .dimensions(width / 2 - 70, 200, 150, 20)
+                //.tooltip(Tooltip.of(Text.of("返回上个界面")))
+                .tooltip(Tooltip.of(Text.translatable("rsm.gui.modmenu.modmenuquit.tooltip")))
+                .build();
 
         addDrawableChild(removeAdvButton);
         addDrawableChild(removeMusicButton);
