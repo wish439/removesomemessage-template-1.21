@@ -1,15 +1,11 @@
 package com.wishtoday.rsm;
 
-import com.terraformersmc.modmenu.api.ModMenuApi;
-import com.wishtoday.rsm.Config.ResConfig;
 import com.wishtoday.rsm.Event.ReceiveMessageEvent;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 public class RemoveSomeMessage implements ModInitializer {
 	public static final String MOD_ID = "removesomemessage";

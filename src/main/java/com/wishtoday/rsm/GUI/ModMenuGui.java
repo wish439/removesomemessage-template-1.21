@@ -105,6 +105,7 @@ public class ModMenuGui extends Screen {
     private static List<String> StringToList(String string) {
         return new ArrayList<>(Arrays.asList(Arrays
                 .stream(string.split(","))
+                .filter(s -> !s.isEmpty())
                 .map(String::trim)
                 .toArray(String[]::new)));
     }

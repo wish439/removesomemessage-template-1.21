@@ -16,8 +16,11 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.wishtoday.rsm.RemoveSomeMessage.LOGGER;
 
@@ -41,9 +44,9 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
         }
         //根据输入框输入删除消息
         List<String> messages = config.getRemoveMessages();
+        if (messages.isEmpty()) return true;
         for (String message : messages) {
-            LOGGER.info(message);
-            if (text.getString().contains(message)) {
+            if (text.getString().contains(message.trim())) {
                 LOGGER.info(text.getString() + "由" + RemoveSomeMessage.MOD_ID + " Mod 因匹配上 " + message + " 而被拦截");
                 return false;
             }
@@ -54,9 +57,11 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
     @Override
     public boolean allowReceiveChatMessage(Text message, @Nullable SignedMessage signedMessage, @Nullable GameProfile sender, MessageType.Parameters params, Instant receptionTimestamp) {
         Configs config = ResConfig.getConfigs();
-        List<String> list = config.getPlayerChatMessages();
+        List<String> list = new ArrayList<>(config.getPlayerChatMessages());
+        list = list.parallelStream().filter(Objects::nonNull).collect(Collectors.toList());
+        if (list.isEmpty()) return true;
         for (String s : list) {
-            if (message.getString().contains(s)) {
+            if (message.getString().contains(s.trim())) {
                 LOGGER.info(message.getString() + "由" + RemoveSomeMessage.MOD_ID + " Mod 因匹配上玩家聊天关键词 " + s + " 而被拦截");
                 return false;
             }
