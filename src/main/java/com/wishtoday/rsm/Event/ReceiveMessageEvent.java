@@ -44,6 +44,7 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
         }
         //根据输入框输入删除消息
         List<String> messages = config.getRemoveMessages();
+        //修复
         if (messages.isEmpty()) return true;
         for (String message : messages) {
             if (text.getString().contains(message.trim())) {
