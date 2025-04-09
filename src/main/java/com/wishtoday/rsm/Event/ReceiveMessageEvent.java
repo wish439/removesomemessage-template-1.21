@@ -59,7 +59,6 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
     public boolean allowReceiveChatMessage(Text message, @Nullable SignedMessage signedMessage, @Nullable GameProfile sender, MessageType.Parameters params, Instant receptionTimestamp) {
         Configs config = ResConfig.getConfigs();
         List<String> list = new ArrayList<>(config.getPlayerChatMessages());
-        list = list.parallelStream().filter(Objects::nonNull).collect(Collectors.toList());
         if (list.isEmpty()) return true;
         for (String s : list) {
             if (message.getString().contains(s.trim())) {
