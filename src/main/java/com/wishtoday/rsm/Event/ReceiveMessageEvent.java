@@ -10,21 +10,21 @@ import com.wishtoday.rsm.Event.EventValues.InterceptMessages.QuitGameMessages;
 import com.wishtoday.rsm.Event.EventValues.StopMessages;
 import com.wishtoday.rsm.RemoveSomeMessage;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.message.MessageType;
 import net.minecraft.network.message.SignedMessage;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.wishtoday.rsm.RemoveSomeMessage.LOGGER;
 
-public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame, ClientReceiveMessageEvents.AllowChat {
+public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame,
+        ClientReceiveMessageEvents.AllowChat {
     private static final List<StopMessages> stopMessages = Arrays.asList(
             new AdvMessages(),
             new JoinGameMessages(),
@@ -68,5 +68,23 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
             }
         }
         return true;
+    }
+
+    public static void MessageReceive(Text messageText, boolean b) {
+        String message = messageText.getString();
+        ClientPlayerEntity player = MinecraftClient.getInstance().player;
+        Configs configs = ResConfig.getConfigs();
+        Map<String, String> messageAndCommand = configs.getMessageAndCommand();
+        Set<String> strings = messageAndCommand.keySet();
+        for (String s : strings) {
+            if (message.contains(s)) {
+                if (player != null) {
+                    String command = messageAndCommand.get(s);
+                    if (!command.startsWith("/"))
+                        player.networkHandler.sendCommand(command);
+                    else player.networkHandler.sendCommand(command.substring(1));
+                }
+            }
+        }
     }
 }

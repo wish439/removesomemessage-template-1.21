@@ -121,6 +121,8 @@ public class ModMenuGui extends Screen {
         //MultilineText multilineText1 = MultilineText.create(textRenderer, Text.of("请输入你要屏蔽的玩家聊天消息，用,隔开(英文逗号)"));
         MultilineText multilineText1 = MultilineText.create(textRenderer, Text.translatable("rsm.gui.modmenu.text2"));
         multilineText1.drawWithShadow(context, width / 2 - 150, 140, 16, 0xffffff);
+        MultilineText multilineText2 = MultilineText.create(textRenderer, Text.translatable("rsm.gui.modmenu.text3"));
+        multilineText2.drawWithShadow(context, width / 2 - 150, 200, 16, 0xffffff);
     }
 
     private void registerTextField() {
@@ -163,7 +165,7 @@ public class ModMenuGui extends Screen {
         //ButtonWidget removeAdvButton = RegisterButton(width / 2, 20, 150, 20, "isRemoveAdvMessages", "是否屏蔽进度消息");
         ButtonWidget removeAdvButton = RegisterButton(width / 2, 20, 150, 20, "isRemoveAdvMessages", "rsm.gui.modmenu.removeadvmessage");
         ButtonWidget modMenuButton = ButtonWidget.builder(Text.translatable("rsm.gui.modmenu.quit"), button -> this.close())
-                .dimensions(width / 2 - 70, 200, 150, 20)
+                .dimensions(width / 2 - 70, 220, 150, 20)
                 //.tooltip(Tooltip.of(Text.of("返回上个界面")))
                 .tooltip(Tooltip.of(Text.translatable("rsm.gui.modmenu.modmenuquit.tooltip")))
                 .build();
