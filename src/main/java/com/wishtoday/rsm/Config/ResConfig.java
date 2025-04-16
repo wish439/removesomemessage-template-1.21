@@ -6,8 +6,6 @@ import com.google.gson.JsonParseException;
 import com.wishtoday.rsm.Unit.ModFileUnits;
 
 import java.io.*;
-import java.util.Objects;
-import java.util.Optional;
 
 public class ResConfig {
     private static final File configFile = new File(ModFileUnits.getFile() + "\\" + ModFileUnits.CONFIG_FILE_NAME);

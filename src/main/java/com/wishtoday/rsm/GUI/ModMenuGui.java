@@ -22,6 +22,7 @@ import java.util.function.Supplier;
 public class ModMenuGui extends Screen {
     private TextFieldWidget fieldWidget;
     private TextFieldWidget PlayerChatFieldWidget;
+    private TextFieldWidget MessageAndCommandField;
     TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
     //消除一些if
     private static final Map<String, Supplier<Boolean>> TEXTSTATEMAP = Map.of(
@@ -124,16 +125,32 @@ public class ModMenuGui extends Screen {
 
     private void registerTextField() {
         fieldWidget = new TextFieldWidget(textRenderer, width / 2 - 150, 60, 300, 20, Text.of("需要屏蔽的文本"));
+        //修改最大长度
+        fieldWidget.setMaxLength(Integer.MAX_VALUE);
         fieldWidget.setTooltip(Tooltip.of(Text.translatable("rsm.gui.modmenu.text1")));
         fieldWidget.setText(String.join(",", ResConfig.getConfigs().getRemoveMessages()));
         fieldWidget.setChangedListener(text -> ResConfig.getConfigs().setRemoveMessages(StringToList(text)));
         addDrawableChild(fieldWidget);
 
         PlayerChatFieldWidget = new TextFieldWidget(textRenderer, width / 2 - 150, 120, 300, 20, Text.of("需要屏蔽的玩家聊天文本"));
+        //修改最大长度
+        PlayerChatFieldWidget.setMaxLength(Integer.MAX_VALUE);
         PlayerChatFieldWidget.setTooltip(Tooltip.of(Text.translatable("rsm.gui.modmenu.text2")));
         PlayerChatFieldWidget.setText(String.join(",", ResConfig.getConfigs().getPlayerChatMessages()));
         PlayerChatFieldWidget.setChangedListener(text -> ResConfig.getConfigs().setPlayerChatMessages(StringToList(text)));
         addDrawableChild(PlayerChatFieldWidget);
+
+        MessageAndCommandField = new TextFieldWidget(textRenderer, width / 2 - 150, 180, 300, 20, Text.of("收到消息时,发送的指令"));
+        //修改最大长度
+        MessageAndCommandField.setMaxLength(Integer.MAX_VALUE);
+        MessageAndCommandField.setTooltip(Tooltip.of(Text.translatable("rsm.gui.modmenu.text3")));
+        MessageAndCommandField.setText(ResConfig.getConfigs().getMessageAndCommandText());
+        MessageAndCommandField.setChangedListener(ModMenuGui::MessageAndCommandFieldChanged);
+        addDrawableChild(MessageAndCommandField);
+    }
+    private static void MessageAndCommandFieldChanged(String text) {
+        ResConfig.getConfigs().setMessageAndCommandText(text);
+        ResConfig.getConfigs().setMessageAndCommand(StringToMap(text));
     }
 
     private void registerButton() {
@@ -156,5 +173,27 @@ public class ModMenuGui extends Screen {
         addDrawableChild(removeJoinButton);
         addDrawableChild(removeQuitButton);
         addDrawableChild(modMenuButton);
+    }
+
+    private static Map<String, String> StringToMap(String s) {
+        Map<String, String> map = new HashMap<>();
+        //[nihao:/say 1],[nihao1:/say 2],[nihao3:/say 3]
+        String[] split = s.split(",");
+        //[nihao:/say 1]
+        // [nihao1:/say 2]
+        // [nihao3:/say 3]
+        for (String string : split) {
+            string = string.replace("[", "").replace("]", "");
+            //nihao:/say 1
+            // nihao1:/say 2
+            // nihao3:/say 3
+            String[] split1 = string.split(":");
+            //nihao
+            // /say 1
+            if (split1.length >= 2 && (split1[0] != null && split1[1] != null)) {
+                map.put(split1[0], split1[1]);
+            }
+        }
+        return map;
     }
 }

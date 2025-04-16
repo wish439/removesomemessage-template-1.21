@@ -1,7 +1,9 @@
 package com.wishtoday.rsm.Config;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Configs {
     private boolean removeMusicMessages = true;
@@ -10,6 +12,30 @@ public class Configs {
     private boolean removeQuitGameMessages = false;
     private List<String> RemoveMessages = new ArrayList<>();
     private List<String> PlayerChatMessages = new ArrayList<>();
+    private Map<String,String> MessageAndCommand = new HashMap<>();
+    private String MessageAndCommandText = "";
+
+    public String getMessageAndCommandText() {
+        return this.MessageAndCommandText;
+    }
+
+    public void setMessageAndCommandText(String messageAndCommandText) {
+        this.MessageAndCommandText = messageAndCommandText;
+        ResConfig.saveConfigs();
+    }
+
+    public Map<String, String> getMessageAndCommand() {
+        return this.MessageAndCommand;
+    }
+
+    public void setMessageAndCommand(Map<String, String> messageAndCommand) {
+        this.MessageAndCommand = messageAndCommand;
+        ResConfig.saveConfigs();
+    }
+    public void addToMessageAndCommand(String key, String value) {
+        this.MessageAndCommand.put(key, value);
+        ResConfig.saveConfigs();
+    }
 
     public  boolean isRemoveQuitGameMessages() {
         return this.removeQuitGameMessages;
