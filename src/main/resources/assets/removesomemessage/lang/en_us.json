@@ -10,5 +10,9 @@
   "rsm.gui.modmenu.removemusic": "Whether to block music messages",
   "rsm.gui.modmenu.removequitgame": "Whether to block the exit message",
   "rsm.gui.modmenu.removejoingame": "Whether to block messages entering the game",
-  "rsm.gui.modmenu.removeadvmessage": "Whether to block progress messages"
+  "rsm.gui.modmenu.removeadvmessage": "Whether to block progress messages",
+  "rsm.gui.all": "All",
+  "rsm.gui.player": "player chat",
+  "rsm.gui.server": "server message",
+  "rsm.gui.modmenu.removechoosestatus": "Intercept messages within an environment"
 }

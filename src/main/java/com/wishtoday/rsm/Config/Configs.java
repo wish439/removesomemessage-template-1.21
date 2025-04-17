@@ -1,5 +1,9 @@
 package com.wishtoday.rsm.Config;
 
+import com.wishtoday.rsm.Unit.Manager.ListManager;
+import com.wishtoday.rsm.Unit.Manager.MapManager;
+import com.wishtoday.rsm.Unit.RemoveStatus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,10 +14,28 @@ public class Configs {
     private boolean removeAdvMessages = true;
     private boolean removeJoinGameMessages = false;
     private boolean removeQuitGameMessages = false;
-    private List<String> RemoveMessages = new ArrayList<>();
-    private List<String> PlayerChatMessages = new ArrayList<>();
-    private Map<String,String> MessageAndCommand = new HashMap<>();
-    private String MessageAndCommandText = "";
+    private ListManager<String> RemoveMessage = new ListManager<>(new ArrayList<>());
+    private MapManager<String,String> ReceiveMessageAndCommand = new MapManager<>(new HashMap<>());
+    public MapManager<String,String> getReceiveMessageAndCommand() {
+        return this.ReceiveMessageAndCommand;
+    }
+    public ListManager<String> getRemoveMessage() {
+        return this.RemoveMessage;
+    }
+    //private List<String> RemoveMessages = new ArrayList<>();
+    //private List<String> PlayerChatMessages = new ArrayList<>();
+    //private RemoveStatus status = RemoveStatus.ALL;
+    //private Map<String,String> MessageAndCommand = new HashMap<>();
+    //private String MessageAndCommandText = "";
+
+    /*public RemoveStatus getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(RemoveStatus status) {
+        this.status = status;
+        ResConfig.saveConfigs();
+    }
 
     public String getMessageAndCommandText() {
         return this.MessageAndCommandText;
@@ -32,10 +54,21 @@ public class Configs {
         this.MessageAndCommand = messageAndCommand;
         ResConfig.saveConfigs();
     }
-    public void addToMessageAndCommand(String key, String value) {
-        this.MessageAndCommand.put(key, value);
+    public List<String> getPlayerChatMessages() {
+        return this.PlayerChatMessages;
+    }
+
+    public void setPlayerChatMessages(List<String> playerChatMessages) {
+        this.PlayerChatMessages = playerChatMessages;
         ResConfig.saveConfigs();
     }
+    public List<String> getRemoveMessages() {
+        return this.RemoveMessages;
+    }
+    public void setRemoveMessages(List<String> removeMessages) {
+        this.RemoveMessages = removeMessages;
+        ResConfig.saveConfigs();
+    }*/
 
     public  boolean isRemoveQuitGameMessages() {
         return this.removeQuitGameMessages;
@@ -48,14 +81,6 @@ public class Configs {
 
     public boolean isRemoveJoinGameMessages() {
         return this.removeJoinGameMessages;
-    }
-
-    public List<String> getRemoveMessages() {
-        return this.RemoveMessages;
-    }
-    public void setRemoveMessages(List<String> removeMessages) {
-        this.RemoveMessages = removeMessages;
-        ResConfig.saveConfigs();
     }
 
     public void setRemoveJoinGameMessages(boolean b) {
@@ -78,15 +103,6 @@ public class Configs {
 
     public void setRemoveAdvMessages(boolean b) {
         this.removeAdvMessages = b;
-        ResConfig.saveConfigs();
-    }
-
-    public List<String> getPlayerChatMessages() {
-        return this.PlayerChatMessages;
-    }
-
-    public void setPlayerChatMessages(List<String> playerChatMessages) {
-        this.PlayerChatMessages = playerChatMessages;
         ResConfig.saveConfigs();
     }
 }

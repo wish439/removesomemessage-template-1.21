@@ -2,7 +2,7 @@
   "rsm.gui.modmenu.quit": "退出",
   "rsm.gui.modmenu.modmenuquit.tooltip": "返回上个界面",
   "rsm.gui.null": "",
-  "rsm.gui.modmenu.text1": "请输入你要屏蔽的服务器消息，用,隔开(英文逗号)",
+  "rsm.gui.modmenu.text1": "请输入你要屏蔽的消息，用,隔开(英文逗号)",
   "rsm.gui.modmenu.text2": "请输入你要屏蔽的玩家聊天消息，用,隔开(英文逗号)",
   "rsm.gui.modmenu.text3": "请输入消息对应的指令,格式为:[消息:命令],[消息2:命令2]不可重复",
   "rsm.gui.opentext": "开",
@@ -10,5 +10,9 @@
   "rsm.gui.modmenu.removemusic": "是否屏蔽音乐消息",
   "rsm.gui.modmenu.removequitgame": "是否屏蔽退出游戏消息",
   "rsm.gui.modmenu.removejoingame": "是否屏蔽进入游戏消息",
-  "rsm.gui.modmenu.removeadvmessage": "是否屏蔽进度消息"
+  "rsm.gui.modmenu.removeadvmessage": "是否屏蔽进度消息",
+  "rsm.gui.all": "全部",
+  "rsm.gui.player": "玩家聊天",
+  "rsm.gui.server": "服务器消息",
+  "rsm.gui.modmenu.removechoosestatus": "在某个环境"
 }
