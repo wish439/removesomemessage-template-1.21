@@ -18,6 +18,7 @@ import net.minecraft.network.message.SignedMessage;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
+import java.sql.Time;
 import java.time.Instant;
 import java.util.*;
 
@@ -27,6 +28,7 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
         , ClientReceiveMessageEvents.AllowChat
         , ClientReceiveMessageEvents.Chat,
         ClientReceiveMessageEvents.Game {
+    private static long TimeSecond = Instant.now().getEpochSecond();
     private static final List<StopMessages> stopMessages = Arrays.asList(
             new AdvMessages(),
             new JoinGameMessages(),
@@ -36,7 +38,16 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
 
     @Override
     public boolean allowReceiveGameMessage(Text text, boolean b) {
+        //Instant now = Instant.now();
+        //LOGGER.info(now.getEpochSecond() + "");
         Configs config = ResConfig.getConfigs();
+        if ((TimeSecond == Instant.now().getEpochSecond())
+                && config.getRemoveSameTimeMessage().get()) {
+            LOGGER.info(text.getString() + "由" + RemoveSomeMessage.MOD_ID + " Mod 同时间消息拦截器发起的拦截");
+            return false;
+        } else {
+            TimeSecond = Instant.now().getEpochSecond();
+        }
         //固定删除消息
         for (StopMessages message : stopMessages) {
             if (message.intercept(text, b, config)) {

@@ -14,5 +14,6 @@
   "rsm.gui.all": "All",
   "rsm.gui.player": "player chat",
   "rsm.gui.server": "server message",
-  "rsm.gui.modmenu.removechoosestatus": "Intercept messages within an environment"
+  "rsm.gui.modmenu.removechoosestatus": "Intercept messages within an environment",
+  "rsm.gui.modmenu.removesametimemessage": "Whether to block messages sent at the same time"
 }
