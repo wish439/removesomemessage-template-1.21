@@ -4,7 +4,7 @@ import com.wishtoday.rsm.Config.ResConfig;
 
 public class ConfigProject<E> {
     private E Project;
-    public ConfigProject(E Project) {
+    private ConfigProject(E Project) {
         this.Project = Project;
     }
     public E get(){
@@ -13,5 +13,8 @@ public class ConfigProject<E> {
     public void set(E Project){
         this.Project = Project;
         ResConfig.saveConfigs();
+    }
+    public static <E> ConfigProject<E> of(E Project) {
+       return new ConfigProject<>(Project);
     }
 }

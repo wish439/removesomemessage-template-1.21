@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ClientAdvancementManager.class)
 public class ClientAdvancementManagerMixin {
-    //将此段代码
-    // this.client.getToastManager().add(new AdvancementToast(placedAdvancement.getAdvancementEntry()));
+    //将
+    //this.client.getToastManager().add(new AdvancementToast(placedAdvancement.getAdvancementEntry()));
     //包围在if(!DefaultConfigEnum.ADV.getValue())中
     @WrapWithCondition(method = "onAdvancements",at = @At(value = "INVOKE", target = "Lnet/minecraft/client/toast/ToastManager;add(Lnet/minecraft/client/toast/Toast;)V"))
     private boolean onAdvancementsAdded(ToastManager instance, Toast toast) {

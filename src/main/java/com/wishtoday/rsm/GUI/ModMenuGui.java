@@ -19,7 +19,7 @@ import net.minecraft.text.Text;
 
 import java.util.*;
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.function.Consumer;
 
 @Environment(EnvType.CLIENT)
 public class ModMenuGui extends Screen {
@@ -27,15 +27,6 @@ public class ModMenuGui extends Screen {
     //private TextFieldWidget PlayerChatFieldWidget;
     private TextFieldWidget MessageAndCommandField;
     TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
-    //消除一些if
-    /*private static final Map<String, Supplier<Boolean>> TEXTSTATEMAP = Map.of(
-            "isRemoveMusicMessages", () -> ResConfig.getConfigs().isRemoveMusicMessages(),
-            "isRemoveJoinGameMessages", () -> ResConfig.getConfigs().isRemoveJoinGameMessages(),
-            "isRemoveQuitGameMessages", () -> ResConfig.getConfigs().isRemoveQuitGameMessages(),
-            "isRemoveAdvMessages", () -> ResConfig.getConfigs().isRemoveAdvMessages(),
-            "removeSameTimeMessage", () -> ResConfig.getConfigs().getRemoveSameTimeMessage().get()
-    );*/
-
     private final Screen parentScreen;
 
     public ModMenuGui(Screen parentScreen) {
@@ -46,10 +37,6 @@ public class ModMenuGui extends Screen {
 
     // 根据当前状态获取按钮文本
     private static Text getTextBasedOnState(DefaultConfigEnum state) {
-        /*return Optional
-                .ofNullable(TEXTSTATEMAP.get(state))
-                .map(s -> Text.translatable(s.get() ? "rsm.gui.opentext" : "rsm.gui.closetext"))
-                .orElse(Text.translatable("rsm.gui.null"));*/
         return Text.translatable(state.getValue() ? "rsm.gui.opentext" : "rsm.gui.closetext");
     }
 
@@ -75,19 +62,6 @@ public class ModMenuGui extends Screen {
 
     private static ButtonWidget RegisterButton(int x, int y, int width, int height, DefaultConfigEnum bool, String tipKey) {
         return ButtonWidget.builder(getTextBasedOnState(bool), button -> {
-                    // 切换状态
-                    /*switch (bool) {
-                        case "isRemoveMusicMessages" ->
-                                ResConfig.getConfigs().setRemoveMusicMessages(!ResConfig.getConfigs().isRemoveMusicMessages());
-                        case "isRemoveJoinGameMessages" ->
-                                ResConfig.getConfigs().setRemoveJoinGameMessages(!ResConfig.getConfigs().isRemoveJoinGameMessages());
-                        case "isRemoveQuitGameMessages" ->
-                                ResConfig.getConfigs().setRemoveQuitGameMessages(!ResConfig.getConfigs().isRemoveQuitGameMessages());
-                        case "isRemoveAdvMessages" ->
-                                ResConfig.getConfigs().setRemoveAdvMessages(!ResConfig.getConfigs().isRemoveAdvMessages());
-                        case "removeSameTimeMessage" ->
-                                ResConfig.getConfigs().getRemoveSameTimeMessage().set(!ResConfig.getConfigs().getRemoveSameTimeMessage().get());
-                    }*/
                     bool.setValue(!bool.getValue());
                     // 更新按钮文本
                     button.setMessage(getTextBasedOnState(bool));
@@ -191,22 +165,11 @@ public class ModMenuGui extends Screen {
     }
 
     private static void MeAnCoChooseStatusAction(ButtonWidget button) {
-        switch (ResConfig.getConfigs().getReceiveMessageAndCommand().getRemoveStatus()) {
-            case SERVER -> ResConfig.getConfigs().getReceiveMessageAndCommand().setRemoveStatus(RemoveStatus.PLAYER);
-            case PLAYER -> ResConfig.getConfigs().getReceiveMessageAndCommand().setRemoveStatus(RemoveStatus.ALL);
-            case ALL -> ResConfig.getConfigs().getReceiveMessageAndCommand().setRemoveStatus(RemoveStatus.SERVER);
-        }
+        RemoveStatus removeStatus = ResConfig.getConfigs().getReceiveMessageAndCommand().getRemoveStatus();
+        ResConfig.getConfigs().getReceiveMessageAndCommand().setRemoveStatus(removeStatus.getNext());
         button.setMessage(getTextBasedOnState(ResConfig.getConfigs().getReceiveMessageAndCommand().getRemoveStatus()));
     }
 
-    /*private static void RemoveChooseStatusAction(ButtonWidget button) {
-        switch (ResConfig.getConfigs().getRemoveMessage().getRemoveStatus()) {
-            case SERVER -> ResConfig.getConfigs().getRemoveMessage().setRemoveStatus(RemoveStatus.PLAYER);
-            case PLAYER -> ResConfig.getConfigs().getRemoveMessage().setRemoveStatus(RemoveStatus.ALL);
-            case ALL -> ResConfig.getConfigs().getRemoveMessage().setRemoveStatus(RemoveStatus.SERVER);
-        }
-        button.setMessage(getTextBasedOnState(ResConfig.getConfigs().getRemoveMessage().getRemoveStatus()));
-    }*/
     private static void RemoveChooseStatusAction(ButtonWidget button) {
         RemoveStatus removeStatus = ResConfig.getConfigs().getRemoveMessage().getRemoveStatus();
         ResConfig.getConfigs().getRemoveMessage().setRemoveStatus(removeStatus.getNext());
@@ -215,19 +178,12 @@ public class ModMenuGui extends Screen {
 
     private static Map<String, String> StringToMap(String s) {
         Map<String, String> map = new HashMap<>();
-        //[nihao:/say 1],[nihao1:/say 2],[nihao3:/say 3]
         String[] split = s.split(",");
-        //[nihao:/say 1]
-        // [nihao1:/say 2]
-        // [nihao3:/say 3]
         for (String string : split) {
-            string = string.replace("[", "").replace("]", "");
-            //nihao:/say 1
-            // nihao1:/say 2
-            // nihao3:/say 3
+            if (string.startsWith("[") && string.endsWith("]")) {
+                string = string.substring(1, string.length() - 1);
+            }
             String[] split1 = string.split(":");
-            //nihao
-            // /say 1
             if (split1.length >= 2 && (split1[0] != null && split1[1] != null)) {
                 map.put(split1[0], split1[1]);
             }

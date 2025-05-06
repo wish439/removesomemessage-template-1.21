@@ -1,40 +1,31 @@
 package com.wishtoday.rsm.Unit;
 
-public enum RemoveStatus {
-    PLAYER {
-        @Override
-        public String getKey() {
-            return "rsm.gui.player";
-        }
+import lombok.Getter;
 
+@Getter
+public enum RemoveStatus {
+    PLAYER("rsm.gui.player") {
         @Override
         public RemoveStatus getNext() {
             return SERVER;
         }
     },
-    SERVER {
-        @Override
-        public String getKey() {
-            return "rsm.gui.server";
-        }
-
+    SERVER("rsm.gui.server") {
         @Override
         public RemoveStatus getNext() {
             return ALL;
         }
     },
-    ALL {
-        @Override
-        public String getKey() {
-            return "rsm.gui.all";
-        }
-
+    ALL("rsm.gui.player") {
         @Override
         public RemoveStatus getNext() {
             return PLAYER;
         }
     };
+    private final String key;
+    RemoveStatus(String key) {
+        this.key = key;
+    }
 
-    public abstract String getKey();
     public abstract RemoveStatus getNext();
 }
