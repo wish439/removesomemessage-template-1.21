@@ -16,7 +16,7 @@ public enum RemoveStatus {
             return ALL;
         }
     },
-    ALL("rsm.gui.player") {
+    ALL("rsm.gui.all") {
         @Override
         public RemoveStatus getNext() {
             return PLAYER;
