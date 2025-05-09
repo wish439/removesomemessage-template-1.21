@@ -40,10 +40,10 @@ public class ModMenuGui extends Screen {
         return Text.translatable(state.getValue() ? "rsm.gui.opentext" : "rsm.gui.closetext");
     }
 
-    private static Text getTextBasedOnState(RemoveStatus status) {
+    /*private static Text getTextBasedOnState(RemoveStatus status) {
         if (status == null) return Text.translatable("rsm.gui.all");
         return Text.translatable(status.getKey());
-    }
+    }*/
 
     @Override
     protected void init() {
@@ -137,13 +137,13 @@ public class ModMenuGui extends Screen {
         ButtonWidget removeSameTimeMessageButton = RegisterButton(width / 2 - 150, 60, 150, 20, DefaultConfigEnum.SAMETIME, "rsm.gui.modmenu.removesametimemessage");
         //ButtonWidget RemoveChooseStatusButton = RegisterButton(width / 2, 80, 150, 20, ResConfig.getConfigs().getRemoveMessage().getRemoveStatus(), "rsm.gui.modmenu.removechoosestatus");
         ButtonWidget RemoveChooseStatusButton = ButtonWidget.builder(
-                        getTextBasedOnState(ResConfig.getConfigs().getRemoveMessage().getRemoveStatus())
+                        ResConfig.getConfigs().getRemoveMessage().getRemoveStatus().getTranslation()
                         , ModMenuGui::RemoveChooseStatusAction)
                 .dimensions(width / 2, 80, 150, 20)
                 .tooltip(Tooltip.of(Text.translatable("rsm.gui.modmenu.removechoosestatus")))
                 .build();
         ButtonWidget MeAnCoChooseStatusButton = ButtonWidget.builder(
-                        getTextBasedOnState(ResConfig.getConfigs().getReceiveMessageAndCommand().getRemoveStatus())
+                        ResConfig.getConfigs().getReceiveMessageAndCommand().getRemoveStatus().getTranslation()
                         , ModMenuGui::MeAnCoChooseStatusAction)
                 .dimensions(width / 2, 140, 150, 20)
                 .tooltip(Tooltip.of(Text.translatable("rsm.gui.modmenu.removechoosestatus")))
@@ -167,13 +167,13 @@ public class ModMenuGui extends Screen {
     private static void MeAnCoChooseStatusAction(ButtonWidget button) {
         RemoveStatus removeStatus = ResConfig.getConfigs().getReceiveMessageAndCommand().getRemoveStatus();
         ResConfig.getConfigs().getReceiveMessageAndCommand().setRemoveStatus(removeStatus.getNext());
-        button.setMessage(getTextBasedOnState(ResConfig.getConfigs().getReceiveMessageAndCommand().getRemoveStatus()));
+        button.setMessage(ResConfig.getConfigs().getReceiveMessageAndCommand().getRemoveStatus().getTranslation());
     }
 
     private static void RemoveChooseStatusAction(ButtonWidget button) {
         RemoveStatus removeStatus = ResConfig.getConfigs().getRemoveMessage().getRemoveStatus();
         ResConfig.getConfigs().getRemoveMessage().setRemoveStatus(removeStatus.getNext());
-        button.setMessage(getTextBasedOnState(ResConfig.getConfigs().getRemoveMessage().getRemoveStatus()));
+        button.setMessage(ResConfig.getConfigs().getRemoveMessage().getRemoveStatus().getTranslation());
     }
 
     private static Map<String, String> StringToMap(String s) {

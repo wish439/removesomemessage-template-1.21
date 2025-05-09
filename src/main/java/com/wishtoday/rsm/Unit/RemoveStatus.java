@@ -1,6 +1,7 @@
 package com.wishtoday.rsm.Unit;
 
 import lombok.Getter;
+import net.minecraft.text.Text;
 
 @Getter
 public enum RemoveStatus {
@@ -28,4 +29,7 @@ public enum RemoveStatus {
     }
 
     public abstract RemoveStatus getNext();
+    public Text getTranslation(){
+        return Text.translatable(key);
+    }
 }
