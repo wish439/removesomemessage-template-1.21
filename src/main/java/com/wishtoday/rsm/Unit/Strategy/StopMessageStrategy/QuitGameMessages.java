@@ -1,14 +1,13 @@
-package com.wishtoday.rsm.Event.EventValues.InterceptMessages;
+package com.wishtoday.rsm.Unit.Strategy.StopMessageStrategy;
 
 import com.wishtoday.rsm.Config.Configs;
-import com.wishtoday.rsm.Event.EventValues.StopMessages;
 import com.wishtoday.rsm.RemoveSomeMessage;
 import com.wishtoday.rsm.Unit.Config.DefaultConfigEnum;
 import net.minecraft.text.Text;
 
 public class QuitGameMessages implements StopMessages {
     @Override
-    public boolean intercept(Text text, boolean b, Configs configs) {
+    public boolean intercept(Text text, Configs configs) {
         return text.getString().contains("退出了游戏")
                 && DefaultConfigEnum.QUITGAME.getValue();
     }
