@@ -15,5 +15,8 @@
   "rsm.gui.player": "玩家聊天",
   "rsm.gui.server": "服务器消息",
   "rsm.gui.modmenu.removechoosestatus": "在某个环境",
-  "rsm.gui.modmenu.removesametimemessage": "是否屏蔽同时间发出的消息"
+  "rsm.gui.modmenu.removesametimemessage": "是否屏蔽同时间发出的消息",
+  "rsm.gui.contains": "包含模式",
+  "rsm.gui.precision": "精准匹配模式",
+  "rsm.gui.modmenu.removematchmode": "选择匹配模式"
 }

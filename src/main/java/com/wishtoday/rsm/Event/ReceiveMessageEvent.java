@@ -3,6 +3,7 @@ package com.wishtoday.rsm.Event;
 import com.mojang.authlib.GameProfile;
 import com.wishtoday.rsm.Config.Configs;
 import com.wishtoday.rsm.Config.ResConfig;
+import com.wishtoday.rsm.Unit.MatchMode;
 import com.wishtoday.rsm.Unit.Strategy.StopMessageStrategy.*;
 import com.wishtoday.rsm.Unit.Strategy.StopMessageStrategy.StopMessages;
 import com.wishtoday.rsm.RemoveSomeMessage;
@@ -44,7 +45,7 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
                 break;
             }
         }
-        yes = ShouldRemoveMessageFromText(text, RemoveStatus.SERVER, yes);
+        yes = ShouldRemoveMessageFromText(text, RemoveStatus.SERVER, config.getRemoveMessage().getMatchMode(), yes);
         return yes;
     }
 
@@ -54,7 +55,7 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
             , @Nullable GameProfile sender
             , MessageType.Parameters params
             , Instant receptionTimestamp) {
-        return ShouldRemoveMessageFromText(message, RemoveStatus.PLAYER);
+        return ShouldRemoveMessageFromText(message, RemoveStatus.PLAYER, ResConfig.getConfigs().getRemoveMessage().getMatchMode());
     }
 
     @Override
@@ -73,16 +74,17 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
         Configs configs = ResConfig.getConfigs();
         RemoveStatus removeStatus = configs.getReceiveMessageAndCommand().getRemoveStatus();
         if (removeStatus.canRemoveFrom(status)) {
-            MessageReceive(message, player, configs);
+            MessageReceive(message, player, configs, configs.getReceiveMessageAndCommand().getMatchMode());
         }
     }
 
     //接收消息,并发送Command
-    private static void MessageReceive(String message, ClientPlayerEntity player, Configs configs) {
+    private static void MessageReceive(String message
+            , ClientPlayerEntity player, Configs configs, MatchMode matchMode) {
         Map<String, String> messageAndCommand = configs.getReceiveMessageAndCommand().get();
         Set<String> strings = messageAndCommand.keySet();
         for (String s : strings) {
-            if (message.contains(s)) {
+            if (matchMode.matches(message, s)) {
                 if (player != null) {
                     String command = messageAndCommand.get(s);
                     if (!command.startsWith("/"))
@@ -94,7 +96,7 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
     }
 
     private static boolean ShouldRemoveMessageFromText(Text text
-            , RemoveStatus removeStatus, boolean b) {
+            , RemoveStatus removeStatus, MatchMode matchMode, boolean b) {
         //如果b为false则返回,确保b必定为true
         if (!b) return false;
         Configs config = ResConfig.getConfigs();
@@ -106,7 +108,7 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
         if (messages.isEmpty()) return true;
         //如果文本包含屏蔽词,返回false(即不可显示)
         for (String message : messages) {
-            if (text.getString().contains(message)) {
+            if (matchMode.matches(text.getString(), message)) {
                 LOGGER.info(text.getString() + "由" + RemoveSomeMessage.MOD_ID + " Mod 因匹配上 " + message + " 而被拦截");
                 b = false;
                 break;
@@ -115,7 +117,7 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
         return b;
     }
 
-    private static boolean ShouldRemoveMessageFromText(Text text, RemoveStatus removeStatus) {
-       return ShouldRemoveMessageFromText(text, removeStatus, true);
+    private static boolean ShouldRemoveMessageFromText(Text text, RemoveStatus removeStatus, MatchMode matchMode) {
+        return ShouldRemoveMessageFromText(text, removeStatus, matchMode, true);
     }
 }

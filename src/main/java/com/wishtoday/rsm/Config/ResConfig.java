@@ -3,19 +3,24 @@ package com.wishtoday.rsm.Config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
+import com.wishtoday.rsm.RemoveSomeMessage;
 import com.wishtoday.rsm.Unit.ModFileUnits;
+import lombok.Getter;
 
 import java.io.*;
 
 public class ResConfig {
     private static final File configFile = new File(ModFileUnits.getFile() + "\\" + ModFileUnits.CONFIG_FILE_NAME);
+    @Getter
     private static Configs configs;
 
     static {
         try {
             loadConfigs();
         } catch (IOException e) {
-            e.printStackTrace();
+            configs = new Configs();
+            saveConfigs();
+            RemoveSomeMessage.LOGGER.warn("Load configs failed");
         }
     }
     public static void saveConfigs() {
@@ -23,7 +28,7 @@ public class ResConfig {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(configFile))) {
             gson.toJson(configs, bw);
         } catch (IOException e) {
-            e.printStackTrace();
+            RemoveSomeMessage.LOGGER.warn("Save configs failed");
         }
     }
 
@@ -38,11 +43,8 @@ public class ResConfig {
         } catch (JsonParseException e) {
             configs = new Configs();
             saveConfigs();
+            RemoveSomeMessage.LOGGER.warn("ParseJson failed");
         }
-    }
-
-    public static Configs getConfigs() {
-        return configs;
     }
 
     public static void setConfigs(Configs configs) {
