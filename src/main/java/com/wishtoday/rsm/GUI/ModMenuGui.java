@@ -42,11 +42,6 @@ public class ModMenuGui extends Screen {
         return Text.translatable(state.getValue() ? "rsm.gui.opentext" : "rsm.gui.closetext");
     }
 
-    /*private static Text getTextBasedOnState(RemoveStatus status) {
-        if (status == null) return Text.translatable("rsm.gui.all");
-        return Text.translatable(status.getKey());
-    }*/
-
     @Override
     protected void init() {
         registerButton();
@@ -62,11 +57,15 @@ public class ModMenuGui extends Screen {
         }
     }
 
-    private static ButtonWidget RegisterButton(int x, int y, int width, int height, DefaultConfigEnum bool, String tipKey) {
-        return ButtonWidget.builder(getTextBasedOnState(bool), button -> {
+    private static ButtonWidget RegisterButton(int x, int y, int width
+            , int height, DefaultConfigEnum bool, String tipKey) {
+        return ButtonWidget.builder(Text.translatable(tipKey)
+                        .append(":").append(getTextBasedOnState(bool))
+                        , button -> {
                     bool.setValue(!bool.getValue());
                     // 更新按钮文本
-                    button.setMessage(getTextBasedOnState(bool));
+                    button.setMessage(Text.translatable(tipKey)
+                            .append(":").append(getTextBasedOnState(bool)));
                 })
                 .dimensions(x, y, width, height)
                 .tooltip(Tooltip.of(Text.translatable(tipKey)))
