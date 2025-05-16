@@ -60,13 +60,13 @@ public class ModMenuGui extends Screen {
     private static ButtonWidget RegisterButton(int x, int y, int width
             , int height, DefaultConfigEnum bool, String tipKey) {
         return ButtonWidget.builder(Text.translatable(tipKey)
-                        .append(":").append(getTextBasedOnState(bool))
+                                .append(":").append(getTextBasedOnState(bool))
                         , button -> {
-                    bool.setValue(!bool.getValue());
-                    // 更新按钮文本
-                    button.setMessage(Text.translatable(tipKey)
-                            .append(":").append(getTextBasedOnState(bool)));
-                })
+                            bool.setValue(!bool.getValue());
+                            // 更新按钮文本
+                            button.setMessage(Text.translatable(tipKey)
+                                    .append(":").append(getTextBasedOnState(bool)));
+                        })
                 .dimensions(x, y, width, height)
                 .tooltip(Tooltip.of(Text.translatable(tipKey)))
                 .build();
@@ -138,25 +138,33 @@ public class ModMenuGui extends Screen {
         ButtonWidget removeSameTimeMessageButton = RegisterButton(width / 2 - 150, 60, 150, 20, DefaultConfigEnum.SAMETIME, "rsm.gui.modmenu.removesametimemessage");
         //ButtonWidget RemoveChooseStatusButton = RegisterButton(width / 2, 80, 150, 20, ResConfig.getConfigs().getRemoveMessage().getRemoveStatus(), "rsm.gui.modmenu.removechoosestatus");
         ButtonWidget RemoveChooseStatusButton = ButtonWidget.builder(
-                        ResConfig.getConfigs().getRemoveMessage().getRemoveStatus().getTranslation()
+                        Text.translatable("rsm.gui.modmenu.removechoosestatus")
+                                .append(":")
+                                .append(ResConfig.getConfigs().getRemoveMessage().getRemoveStatus().getTranslation())
                         , ModMenuGui::RemoveChooseStatusAction)
                 .dimensions(width / 2, 80, 150, 20)
                 .tooltip(Tooltip.of(Text.translatable("rsm.gui.modmenu.removechoosestatus")))
                 .build();
         ButtonWidget RemoveChooseMatchModeButton = ButtonWidget.builder(
-                        ResConfig.getConfigs().getRemoveMessage().getMatchMode().getTranslation()
+                        Text.translatable("rsm.gui.modmenu.removematchmode")
+                                .append(":")
+                                .append(ResConfig.getConfigs().getRemoveMessage().getMatchMode().getTranslation())
                         , ModMenuGui::RemoveChooseMatchModeButtonAction)
                 .dimensions(width / 2 - 150, 80, 150, 20)
                 .tooltip(Tooltip.of(Text.translatable("rsm.gui.modmenu.removematchmode")))
                 .build();
         ButtonWidget MeAnCoChooseStatusButton = ButtonWidget.builder(
-                        ResConfig.getConfigs().getReceiveMessageAndCommand().getRemoveStatus().getTranslation()
+                        Text.translatable("rsm.gui.modmenu.removechoosestatus")
+                                .append(":")
+                                .append(ResConfig.getConfigs().getReceiveMessageAndCommand().getRemoveStatus().getTranslation())
                         , ModMenuGui::MeAnCoChooseStatusAction)
                 .dimensions(width / 2, 140, 150, 20)
                 .tooltip(Tooltip.of(Text.translatable("rsm.gui.modmenu.removechoosestatus")))
                 .build();
         ButtonWidget MeAnCoChooseMatchModeButton = ButtonWidget.builder(
-                        ResConfig.getConfigs().getReceiveMessageAndCommand().getMatchMode().getTranslation()
+                        Text.translatable("rsm.gui.modmenu.removematchmode")
+                                .append(":")
+                                .append(ResConfig.getConfigs().getReceiveMessageAndCommand().getMatchMode().getTranslation())
                         , ModMenuGui::MeAnCoChooseMatchModeButtonAction)
                 .dimensions(width / 2 - 150, 140, 150, 20)
                 .tooltip(Tooltip.of(Text.translatable("rsm.gui.modmenu.removematchmode")))
@@ -178,27 +186,37 @@ public class ModMenuGui extends Screen {
         addDrawableChild(MeAnCoChooseMatchModeButton);
         addDrawableChild(modMenuButton);
     }
+
     private static void RemoveChooseStatusAction(ButtonWidget button) {
         RemoveStatus removeStatus = ResConfig.getConfigs().getRemoveMessage().getRemoveStatus();
         ResConfig.getConfigs().getRemoveMessage().setRemoveStatus(removeStatus.getNext());
-        button.setMessage(ResConfig.getConfigs().getRemoveMessage().getRemoveStatus().getTranslation());
+        button.setMessage(Text.translatable("rsm.gui.modmenu.removechoosestatus")
+                .append(":")
+                .append(ResConfig.getConfigs().getRemoveMessage().getRemoveStatus().getTranslation()));
     }
 
     private static void RemoveChooseMatchModeButtonAction(ButtonWidget button) {
         MatchMode matchMode = ResConfig.getConfigs().getRemoveMessage().getMatchMode();
         ResConfig.getConfigs().getRemoveMessage().setMatchMode(matchMode.getNextMode());
-        button.setMessage(ResConfig.getConfigs().getRemoveMessage().getMatchMode().getTranslation());
+        button.setMessage(Text.translatable("rsm.gui.modmenu.removematchmode")
+                .append(":")
+                .append(ResConfig.getConfigs().getRemoveMessage().getMatchMode().getTranslation()));
     }
 
     private static void MeAnCoChooseStatusAction(ButtonWidget button) {
         RemoveStatus removeStatus = ResConfig.getConfigs().getReceiveMessageAndCommand().getRemoveStatus();
         ResConfig.getConfigs().getReceiveMessageAndCommand().setRemoveStatus(removeStatus.getNext());
-        button.setMessage(ResConfig.getConfigs().getReceiveMessageAndCommand().getRemoveStatus().getTranslation());
+        button.setMessage(Text.translatable("rsm.gui.modmenu.removechoosestatus")
+                .append(":")
+                .append(ResConfig.getConfigs().getReceiveMessageAndCommand().getRemoveStatus().getTranslation()));
     }
+
     private static void MeAnCoChooseMatchModeButtonAction(ButtonWidget button) {
         MatchMode matchMode = ResConfig.getConfigs().getReceiveMessageAndCommand().getMatchMode();
         ResConfig.getConfigs().getReceiveMessageAndCommand().setMatchMode(matchMode.getNextMode());
-        button.setMessage(ResConfig.getConfigs().getReceiveMessageAndCommand().getMatchMode().getTranslation());
+        button.setMessage(Text.translatable("rsm.gui.modmenu.removematchmode")
+                .append(":")
+                .append(ResConfig.getConfigs().getReceiveMessageAndCommand().getMatchMode().getTranslation()));
     }
 
 
