@@ -7,7 +7,7 @@
   "rsm.gui.modmenu.text3": "Please enter the command corresponding to the message, in the format: [message: command], [message 2: command 2] cannot be repeated",
   "rsm.gui.opentext" : "open",
   "rsm.gui.closetext": "close",
-  "rsm.gui.modmenu.removemusic": "Whether to block music messages",
+  "rsm.gui.modmenu.removemusic": "Whether to block the death message",
   "rsm.gui.modmenu.removequitgame": "Whether to block the exit message",
   "rsm.gui.modmenu.removejoingame": "Whether to block messages entering the game",
   "rsm.gui.modmenu.removeadvmessage": "Whether to block progress messages",

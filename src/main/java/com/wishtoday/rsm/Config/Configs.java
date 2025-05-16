@@ -11,7 +11,7 @@ import java.util.HashMap;
 @Getter
 public class Configs {
     private final ConfigProject<Boolean> removeSameTimeMessage = ConfigProject.of(false);
-    private final ConfigProject<Boolean> removeMusicMessages = ConfigProject.of(false);
+    private final ConfigProject<Boolean> removeDeathMessages = ConfigProject.of(false);
     private final ConfigProject<Boolean> removeAdvMessages = ConfigProject.of(false);
     private final ConfigProject<Boolean> removeJoinGameMessages = ConfigProject.of(false);;
     private final ConfigProject<Boolean> removeQuitGameMessages = ConfigProject.of(false);;

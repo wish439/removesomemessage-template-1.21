@@ -132,7 +132,7 @@ public class ModMenuGui extends Screen {
     }
 
     private void registerButton() {
-        ButtonWidget removeMusicButton = RegisterButton(width / 2, 40, 150, 20, DefaultConfigEnum.MUSIC, "rsm.gui.modmenu.removemusic");
+        ButtonWidget removeMusicButton = RegisterButton(width / 2, 40, 150, 20, DefaultConfigEnum.DEATH, "rsm.gui.modmenu.removemusic");
         ButtonWidget removeQuitButton = RegisterButton(width / 2 - 150, 40, 150, 20, DefaultConfigEnum.QUITGAME, "rsm.gui.modmenu.removequitgame");
         ButtonWidget removeJoinButton = RegisterButton(width / 2 - 150, 20, 150, 20, DefaultConfigEnum.JOINGAME, "rsm.gui.modmenu.removejoingame");
         ButtonWidget removeAdvButton = RegisterButton(width / 2, 20, 150, 20, DefaultConfigEnum.ADV, "rsm.gui.modmenu.removeadvmessage");

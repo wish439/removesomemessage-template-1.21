@@ -7,7 +7,7 @@
   "rsm.gui.modmenu.text3": "请输入消息对应的指令,格式为:[消息:命令],[消息2:命令2]不可重复",
   "rsm.gui.opentext": "开",
   "rsm.gui.closetext": "关",
-  "rsm.gui.modmenu.removemusic": "是否屏蔽音乐消息",
+  "rsm.gui.modmenu.removemusic": "是否屏蔽死亡消息",
   "rsm.gui.modmenu.removequitgame": "是否屏蔽退出游戏消息",
   "rsm.gui.modmenu.removejoingame": "是否屏蔽进入游戏消息",
   "rsm.gui.modmenu.removeadvmessage": "是否屏蔽进度消息",

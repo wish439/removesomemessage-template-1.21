@@ -28,7 +28,7 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
     private static final List<StopMessages> stopMessages = Arrays.asList(
             new AdvMessages(),
             new JoinGameMessages(),
-            new MusicMessages(),
+            new DeathMessages(),
             new QuitGameMessages(),
             new SameTimeMessage()
     );
@@ -55,12 +55,17 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
             , @Nullable GameProfile sender
             , MessageType.Parameters params
             , Instant receptionTimestamp) {
-        return ShouldRemoveMessageFromText(message, RemoveStatus.PLAYER, ResConfig.getConfigs().getRemoveMessage().getMatchMode());
+        return ShouldRemoveMessageFromText(Text.of(signedMessage.getSignedContent()), RemoveStatus.PLAYER, ResConfig.getConfigs().getRemoveMessage().getMatchMode());
     }
 
     @Override
-    public void onReceiveChatMessage(Text messageText, SignedMessage signedMessage, GameProfile sender, MessageType.Parameters params, Instant receptionTimestamp) {
-        messageAndCommandReceive(messageText, RemoveStatus.PLAYER);
+    public void onReceiveChatMessage(Text messageText
+            , SignedMessage signedMessage
+            , GameProfile sender
+            , MessageType.Parameters params
+            , Instant receptionTimestamp) {
+        LOGGER.info("接收消息:" + signedMessage.getSignedContent());
+        messageAndCommandReceive(Text.of(signedMessage.getSignedContent()), RemoveStatus.PLAYER);
     }
 
     @Override
@@ -80,7 +85,8 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
 
     //接收消息,并发送Command
     private static void MessageReceive(String message
-            , ClientPlayerEntity player, Configs configs, MatchMode matchMode) {
+            , ClientPlayerEntity player, Configs configs
+            , MatchMode matchMode) {
         Map<String, String> messageAndCommand = configs.getReceiveMessageAndCommand().get();
         Set<String> strings = messageAndCommand.keySet();
         for (String s : strings) {

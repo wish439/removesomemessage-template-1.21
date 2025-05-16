@@ -1,7 +1,5 @@
 package com.wishtoday.rsm.Unit;
 
-import com.wishtoday.rsm.RemoveSomeMessage;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 
 public enum MatchMode {
@@ -17,14 +15,9 @@ public enum MatchMode {
         }
     },
     PRECISION("rsm.gui.precision") {
+
         @Override
         public boolean matches(String s, String p) {
-            RemoveSomeMessage.LOGGER.info("消息处理前" + s);
-            MinecraftClient mc = MinecraftClient.getInstance();
-            String name = mc.player.getGameProfile().getName();
-            name = "<" + name + "> ";
-            s = s.substring(name.length());
-            RemoveSomeMessage.LOGGER.info("消息处理后" + s);
             return s.equals(p) && !s.isEmpty();
         }
 
@@ -40,6 +33,7 @@ public enum MatchMode {
     }
 
     public abstract boolean matches(String s, String p);
+
 
     public abstract MatchMode getNextMode();
 

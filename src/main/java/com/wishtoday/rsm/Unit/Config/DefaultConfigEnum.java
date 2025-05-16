@@ -25,15 +25,15 @@ public enum DefaultConfigEnum {
             ResConfig.getConfigs().getRemoveJoinGameMessages().set(value);
         }
     },
-    MUSIC {
+    DEATH {
         @Override
         public boolean getValue() {
-            return ResConfig.getConfigs().getRemoveMusicMessages().get();
+            return ResConfig.getConfigs().getRemoveDeathMessages().get();
         }
 
         @Override
         public void setValue(boolean value) {
-            ResConfig.getConfigs().getRemoveMusicMessages().set(value);
+            ResConfig.getConfigs().getRemoveDeathMessages().set(value);
         }
     },
     QUITGAME {
