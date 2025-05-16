@@ -64,7 +64,6 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.AllowGame
             , GameProfile sender
             , MessageType.Parameters params
             , Instant receptionTimestamp) {
-        LOGGER.info("接收消息:" + signedMessage.getSignedContent());
         messageAndCommandReceive(Text.of(signedMessage.getSignedContent()), RemoveStatus.PLAYER);
     }
 
