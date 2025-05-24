@@ -2,6 +2,7 @@ package com.wishtoday.rsm;
 
 import com.wishtoday.rsm.Event.AllowReceiveMessageEvent;
 import com.wishtoday.rsm.Event.ReceiveMessageEvent;
+import com.wishtoday.rsm.KeyBoard.OpenConfigGui;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
@@ -18,5 +19,7 @@ public class RemoveSomeMessage implements ModInitializer {
 		ClientReceiveMessageEvents.ALLOW_CHAT.register(new AllowReceiveMessageEvent());
 		ClientReceiveMessageEvents.CHAT.register(new ReceiveMessageEvent());
 		ClientReceiveMessageEvents.GAME.register(new ReceiveMessageEvent());
+		OpenConfigGui.registerKeyBindings();
+		OpenConfigGui.ListeningKey();
 	}
 }

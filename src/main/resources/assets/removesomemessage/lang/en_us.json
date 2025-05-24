@@ -18,5 +18,7 @@
   "rsm.gui.modmenu.removesametimemessage": "Whether to block messages sent at the same time",
   "rsm.gui.contains": "contains Mode",
   "rsm.gui.precision": "precision Mode",
-  "rsm.gui.modmenu.removematchmode": "Select the matching pattern"
+  "rsm.gui.modmenu.removematchmode": "Select the matching pattern",
+  "rsm.key.ocg": "Open config gui",
+  "category.rsm": "removeSomeMessage"
 }
