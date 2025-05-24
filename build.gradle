@@ -27,8 +27,8 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	//ModMenu
-	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
-
+	//modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+	modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
