@@ -2,12 +2,15 @@ package com.wishtoday.rsm.mixin;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.wishtoday.rsm.Unit.Config.DefaultConfigEnum;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.network.ClientAdvancementManager;
 import net.minecraft.client.toast.Toast;
 import net.minecraft.client.toast.ToastManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+@Environment(EnvType.CLIENT)
 @Mixin(ClientAdvancementManager.class)
 public class ClientAdvancementManagerMixin {
     //将

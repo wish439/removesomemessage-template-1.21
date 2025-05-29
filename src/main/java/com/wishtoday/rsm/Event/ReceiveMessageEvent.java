@@ -8,6 +8,8 @@ import com.wishtoday.rsm.Unit.Strategy.StopMessageStrategy.*;
 import com.wishtoday.rsm.Unit.Strategy.StopMessageStrategy.StopMessages;
 import com.wishtoday.rsm.RemoveSomeMessage;
 import com.wishtoday.rsm.Unit.RemoveStatus;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -21,6 +23,7 @@ import java.util.*;
 
 import static com.wishtoday.rsm.RemoveSomeMessage.LOGGER;
 
+@Environment(EnvType.CLIENT)
 public class ReceiveMessageEvent implements ClientReceiveMessageEvents.Chat,
         ClientReceiveMessageEvents.Game {
 

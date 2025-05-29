@@ -15,7 +15,6 @@ public class DeathMessages implements StopMessages {
             return false;
         }
         TranslatableTextContent translatableTextContent = (TranslatableTextContent) text.getContent();
-        RemoveSomeMessage.LOGGER.info("TranslationKey:" + translatableTextContent.getKey());
         return translatableTextContent.getKey().startsWith("death.")
                 && DefaultConfigEnum.DEATH.getValue();
     }
