@@ -1,4 +1,4 @@
-package com.wishtoday.rsm.Unit;
+package com.wishtoday.rsm.Util.Config;
 
 import net.minecraft.text.Text;
 

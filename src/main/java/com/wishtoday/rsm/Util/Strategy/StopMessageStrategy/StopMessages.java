@@ -1,4 +1,4 @@
-package com.wishtoday.rsm.Unit.Strategy.StopMessageStrategy;
+package com.wishtoday.rsm.Util.Strategy.StopMessageStrategy;
 
 import com.wishtoday.rsm.Config.Configs;
 import com.wishtoday.rsm.RemoveSomeMessage;

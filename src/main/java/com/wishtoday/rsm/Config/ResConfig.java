@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import com.wishtoday.rsm.RemoveSomeMessage;
-import com.wishtoday.rsm.Unit.ModFileUnits;
+import com.wishtoday.rsm.Util.ModFileUnits;
 import lombok.Getter;
 
 import java.io.*;
@@ -25,7 +25,9 @@ public class ResConfig {
     }
     public static void saveConfigs() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        //ObjectMapper mapper = new ObjectMapper();
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(configFile))) {
+            //mapper.writerWithDefaultPrettyPrinter().writeValue(bw, configs);
             gson.toJson(configs, bw);
         } catch (IOException e) {
             RemoveSomeMessage.LOGGER.warn("Save configs failed");

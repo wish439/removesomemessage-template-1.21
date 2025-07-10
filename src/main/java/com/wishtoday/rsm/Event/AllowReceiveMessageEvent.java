@@ -4,9 +4,9 @@ import com.mojang.authlib.GameProfile;
 import com.wishtoday.rsm.Config.Configs;
 import com.wishtoday.rsm.Config.ResConfig;
 import com.wishtoday.rsm.RemoveSomeMessage;
-import com.wishtoday.rsm.Unit.MatchMode;
-import com.wishtoday.rsm.Unit.RemoveStatus;
-import com.wishtoday.rsm.Unit.Strategy.StopMessageStrategy.*;
+import com.wishtoday.rsm.Util.Config.MatchMode;
+import com.wishtoday.rsm.Util.Config.RemoveStatus;
+import com.wishtoday.rsm.Util.Strategy.StopMessageStrategy.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
@@ -38,6 +38,7 @@ public class AllowReceiveMessageEvent implements ClientReceiveMessageEvents.Allo
             , @Nullable GameProfile sender
             , MessageType.Parameters params
             , Instant receptionTimestamp) {
+        if (signedMessage == null || sender == null) return true;
         return ShouldRemoveMessageFromText(Text.of(signedMessage.getSignedContent()), RemoveStatus.PLAYER, ResConfig.getConfigs().getRemoveMessage().getMatchMode());
     }
     @Override

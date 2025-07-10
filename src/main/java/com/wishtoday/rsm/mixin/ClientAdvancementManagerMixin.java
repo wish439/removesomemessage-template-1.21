@@ -1,7 +1,7 @@
 package com.wishtoday.rsm.mixin;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import com.wishtoday.rsm.Unit.Config.DefaultConfigEnum;
+import com.wishtoday.rsm.Util.Config.DefaultConfigEnum;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.network.ClientAdvancementManager;

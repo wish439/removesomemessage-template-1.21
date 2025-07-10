@@ -1,4 +1,4 @@
-package com.wishtoday.rsm.Unit.Config;
+package com.wishtoday.rsm.Util.Config;
 
 import com.wishtoday.rsm.Config.ResConfig;
 

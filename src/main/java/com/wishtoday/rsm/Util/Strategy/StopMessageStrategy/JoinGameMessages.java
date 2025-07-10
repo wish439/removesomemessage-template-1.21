@@ -1,8 +1,8 @@
-package com.wishtoday.rsm.Unit.Strategy.StopMessageStrategy;
+package com.wishtoday.rsm.Util.Strategy.StopMessageStrategy;
 
 import com.wishtoday.rsm.Config.Configs;
 import com.wishtoday.rsm.RemoveSomeMessage;
-import com.wishtoday.rsm.Unit.Config.DefaultConfigEnum;
+import com.wishtoday.rsm.Util.Config.DefaultConfigEnum;
 import net.minecraft.text.Text;
 
 public class JoinGameMessages implements StopMessages {

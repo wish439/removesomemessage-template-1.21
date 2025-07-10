@@ -1,11 +1,10 @@
-package com.wishtoday.rsm.Unit.Manager;
+package com.wishtoday.rsm.Util.Manager;
 
 import com.wishtoday.rsm.Config.ResConfig;
-import com.wishtoday.rsm.Unit.MatchMode;
-import com.wishtoday.rsm.Unit.RemoveStatus;
+import com.wishtoday.rsm.Util.Config.MatchMode;
+import com.wishtoday.rsm.Util.Config.RemoveStatus;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class FieldListManager<E> implements CustomFieldManager<List<E>> {
@@ -15,8 +14,8 @@ public class FieldListManager<E> implements CustomFieldManager<List<E>> {
 
     public FieldListManager(List<E> list, RemoveStatus removeStatus, MatchMode matchMode) {
         this.list = list;
-        this.removeStatus = removeStatus;
-        this.matchMode = matchMode;
+        this.setRemoveStatus(removeStatus);
+        this.setMatchMode(matchMode);
     }
 
     public FieldListManager(List<E> list) {
@@ -40,6 +39,7 @@ public class FieldListManager<E> implements CustomFieldManager<List<E>> {
             this.setRemoveStatus(RemoveStatus.ALL);
             return this.removeStatus;
         });
+        //return this.removeStatus;
     }
 
     @Override
@@ -54,6 +54,7 @@ public class FieldListManager<E> implements CustomFieldManager<List<E>> {
             this.setMatchMode(MatchMode.CONTAINS);
             return this.matchMode;
         });
+        //return this.matchMode;
     }
 
     @Override

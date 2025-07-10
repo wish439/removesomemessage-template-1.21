@@ -1,4 +1,4 @@
-package com.wishtoday.rsm.Unit.Manager;
+package com.wishtoday.rsm.Util.Manager;
 
 public interface CustomManager<E> {
     E get();

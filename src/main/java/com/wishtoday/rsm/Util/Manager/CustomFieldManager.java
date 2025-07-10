@@ -1,7 +1,7 @@
-package com.wishtoday.rsm.Unit.Manager;
+package com.wishtoday.rsm.Util.Manager;
 
-import com.wishtoday.rsm.Unit.MatchMode;
-import com.wishtoday.rsm.Unit.RemoveStatus;
+import com.wishtoday.rsm.Util.Config.MatchMode;
+import com.wishtoday.rsm.Util.Config.RemoveStatus;
 
 public interface CustomFieldManager<E> extends CustomManager<E> {
     RemoveStatus getRemoveStatus();
