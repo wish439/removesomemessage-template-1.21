@@ -27,6 +27,7 @@ public class ReceiveMessageEvent implements ClientReceiveMessageEvents.Chat,
             , GameProfile sender
             , MessageType.Parameters params
             , Instant receptionTimestamp) {
+        if (signedMessage == null || sender == null) return;
         messageAndCommandReceive(Text.of(signedMessage.getSignedContent()), RemoveStatus.PLAYER);
     }
 
